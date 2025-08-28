@@ -65,41 +65,10 @@ def chat(query_input: QueryInput):
 
     context_docs = result.get("context", []) if isinstance(result, dict) else []
     answer = result.get("answer") if isinstance(result, dict) else None
-    
-    # Extract reasoning information
-    reasoning = ""
-    sources = []
-    confidence = 0.0
-    
-    if context_docs:
-        # Extract source information
-        sources = [doc.metadata.get("source", "Unknown") if hasattr(doc, 'metadata') else "Unknown" 
-                  for doc in context_docs]
-        
-        # Parse reasoning from model response if available
-        if answer and "REASONING:" in answer:
-            # Split response to extract reasoning and answer
-            parts = answer.split("ANSWER:", 1)
-            if len(parts) == 2:
-                reasoning_part = parts[0].replace("REASONING:", "").strip()
-                answer = parts[1].strip()
-                reasoning = reasoning_part
-            else:
-                reasoning = f"Based on {len(context_docs)} relevant document(s): {', '.join(sources)}. "
-                reasoning += f"The answer was constructed using the most relevant information from these sources."
-        else:
-            # Generate reasoning based on context
-            reasoning = f"Based on {len(context_docs)} relevant document(s): {', '.join(sources)}. "
-            reasoning += f"The answer was constructed using the most relevant information from these sources."
-        
-        # Simple confidence scoring based on context relevance
-        confidence = min(0.9, 0.5 + (len(context_docs) * 0.1))
-    else:
+    if not context_docs:
         answer = (
             answer if answer and "don't know" in answer.lower() else "I don't know."
         )
-        reasoning = "No relevant documents found in the knowledge base."
-        confidence = 0.1
 
     insert_application_logs(
         session_id, question, answer, query_input.model.value, latency_s
@@ -107,15 +76,7 @@ def chat(query_input: QueryInput):
     logging.info(
         f"Session ID: {session_id}, Latency: {latency_s:.2f} s, AI Response: {answer}"
     )
-    
-    return QueryResponse(
-        answer=answer, 
-        session_id=session_id, 
-        model=query_input.model,
-        reasoning=reasoning,
-        sources=sources,
-        confidence=confidence
-    )
+    return QueryResponse(answer=answer, session_id=session_id, model=query_input.model)
 
 
 

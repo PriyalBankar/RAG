@@ -18,9 +18,6 @@ class QueryResponse(BaseModel):
     answer: str
     session_id: str
     model: ModelName
-    reasoning: str = Field(default="", description="Model's reasoning process")
-    sources: list[str] = Field(default=[], description="Source documents used")
-    confidence: float = Field(default=0.0, description="Model's confidence in the answer")
 
 
 class DocumentInfo(BaseModel):
