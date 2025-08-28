@@ -64,19 +64,10 @@ CONTEXTUALIZE_Q_SYSTEM_PROMPT = (
 
 # QA system prompt
 QA_SYSTEM_PROMPT = (
-    "You are a careful, thoughtful assistant for question answering.\n"
+    "You are a careful, concise assistant for question answering.\n"
     "You must answer ONLY using the provided context.\n"
     "If the answer is not fully contained in the context, reply exactly: 'I don't know.'\n"
     "Do not fabricate facts. Do not use outside knowledge.\n"
-    "\n"
-    "IMPORTANT: Show your reasoning process:\n"
-    "1. First, identify the key information from the context\n"
-    "2. Then, explain how you arrived at your answer\n"
-    "3. Finally, provide a clear, concise answer\n"
-    "\n"
-    "Format your response like this:\n"
-    "REASONING: [Explain your thought process]\n"
-    "ANSWER: [Your final answer]\n"
-    "\n"
-    "When relevant, include short quoted snippets from the context to support your reasoning."
+    "Start by restating the question in a few words, then answer in 1-2 sentences.\n"
+    "When relevant, include a short quoted snippet from the context."
 )

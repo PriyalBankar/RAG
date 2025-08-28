@@ -77,12 +77,5 @@ All configuration constants are centralized in `utilities/constants.py`:
 - Retriever parameters (k, fetch_k, lambda)
 - LangChain prompts (contextualization, QA system prompts)
 
-## Architecture Benefits
-
-- **Maintainability**: Centralized constants make configuration changes easy
-- **Scalability**: Clear separation allows independent development of components
-- **Reusability**: Utilities can be shared across different parts of the application
-- **Testing**: Modular structure enables easier unit testing
-- **Deployment**: Clear separation makes deployment configuration simpler
 
 
